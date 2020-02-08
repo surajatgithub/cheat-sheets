@@ -39,3 +39,10 @@ Add Remote URL to the Repository
 git config credential.helper store
 git push <git uri>
 ```
+
+# Checkout
+### Checkout to remote branch
+```sh
+$ git checkout -b <branch_name> remotes/origin/<branch_name>
+```
+
