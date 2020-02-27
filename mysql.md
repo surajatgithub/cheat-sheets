@@ -32,3 +32,32 @@ FROM
 WHERE
     t.table_schema = 'db_name';
 ```
+
+# Get timezone of the mysql
+```sh
+$ SELECT timediff(now(),convert_tz(now(),@@session.time_zone,'+00:00'));
+$ SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP);
+```
+
+# Convert -ve timestampot to date string
+```sh
+$ DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), interval `ks`.`user_dob` second), '%Y-%m-%d') as user_dob,
+$ TIMESTAMPDIFF(YEAR, DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), interval `ks`.`user_dob` second), '%Y-%m-%d'), CURDATE()) as user_age,
+```
+
+# REG EX REPLACE
+```sh
+$ REGEXP_REPLACE(SUBSTRING(
+    image_dump,
+    POSITION("valid_score" IN `image_dump`) + 13,
+    5
+), '[^0-9]', '') as valid_score,
+
+```
+
+# Set timezone
+```sh
+SET time_zone = 'Europe/Helsinki';
+SET time_zone = "+00:00";
+SET @@session.time_zone = "+00:00";
+```
