@@ -392,3 +392,12 @@ cd
 
 # Change to the /etc directory
 cd /etc
+
+# Other
+# Check Limit
+ulimit -a
+
+# Check the service status
+sudo service mysqld start
+service mysqld status
+systemctl
