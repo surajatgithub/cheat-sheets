@@ -182,3 +182,34 @@ composer dump-autoload
 
 php artisan vendor:publish --tag=laravel-pagination
 	- Publish the laravel view
+
+```sh
+function getFeaturedAttribute($featured)
+{
+	return asset($featured);
+}
+```
+
+php artisan preset react
+npm install
+npm run dev
+	- Integrate React
+
+SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes
+
+```sh
+path: mini_task_manager\app\Providers\AppServiceProvider.php
+use Illuminate\Support\Facades\Schema;
+public function boot()
+{
+	Schema::defaultStringLength(191);
+}
+```
+
+composer require laravel/ui --dev
+	- install the Bootstrap and Vue scaffolding provided by Laravel which is located in the laravel/ui Composer package. 
+
+php artisan ui bootstrap
+php artisan ui vue
+php artisan ui react
+	- Generate basic frontend scafollding
