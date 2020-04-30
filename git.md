@@ -68,3 +68,15 @@ $ git show-branch -a \
 ```sh
 $ git parent
 ```
+
+### Go to a particular commit of a git repository
+```sh
+$ git checkout <HASH>
+$ git submodule update
+```
+
+### Going back to the most recent commit
+```sh
+$ git checkout <active_branch_name>
+$ git submodule update
+```

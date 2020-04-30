@@ -61,3 +61,18 @@ SET time_zone = 'Europe/Helsinki';
 SET time_zone = "+00:00";
 SET @@session.time_zone = "+00:00";
 ```
+
+# Order By preference
+```sh
+$this->db->order_by('FIELD(ksc.document_type, "passport", "national_id", "other")');
+```
+
+# Select this or that
+```sh
+$ COALESCE(
+    ksc.document_name,
+    mid.display_name
+) AS document_name
+
+$ SELECT coalesce(NULLIF(email, ''), 'user@domain.com') FROM users WHERE id=1000000;
+```
