@@ -76,3 +76,12 @@ $ COALESCE(
 
 $ SELECT coalesce(NULLIF(email, ''), 'user@domain.com') FROM users WHERE id=1000000;
 ```
+
+# Find and Replace
+```sh
+$ SELECT    
+    `red_status_feedback_text`,
+    replace(red_status_feedback_text, 'user_full_name', 'user_full_name_user_full_name')
+FROM 
+    kyc_companies;
+```

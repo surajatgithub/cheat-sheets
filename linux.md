@@ -241,9 +241,14 @@ fg
 ### Brings job n to the foreground
 fg n
 7 – FILE PERMISSIONS
+
+0 = No Permission
+1 = Execute
+2 = Write
+4 = Read
+
 Linux chmod example
         PERMISSION      EXAMPLE
-
          U   G   W
         rwx rwx rwx     chmod 777 filename
         rwx rwx r-x     chmod 775 filename
