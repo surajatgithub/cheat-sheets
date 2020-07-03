@@ -413,6 +413,9 @@ cd /etc
 ### Check Limit
 ulimit -a
 
+### Restart service
+sudo service apache2 restart
+
 ### Check the service status
 systemctl
 - Get all the services
