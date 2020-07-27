@@ -32,6 +32,10 @@ $ rm filename
 ```sh
 $ tail -x <file_path>
 ```
+### get count of files with in directory
+```sh
+$ ls | wc -l
+```
 
 1 – SYSTEM INFORMATION
 ### Display Linux system information
