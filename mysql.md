@@ -3,6 +3,7 @@
 $ mysql -u root -p < db_name < "<file_path>"
 $ mysql -u root -p < db_name < "<file_path>"
 $ mysql -u root -p prod_verify_live_1 < "<file_path>"
+$ mysql -u root -p verify_kyc_acme < "C:\Users\Codebox\Downloads\verify_kyc_acme.sql"
 ```
 
 # Export
@@ -18,9 +19,14 @@ INSERT INTO tbl_temp2 (fld_id)
   FROM tbl_temp1 WHERE tbl_temp1.fld_order_id > 100;
 ```
 
-# Search from JSON data
+# Search from JSON data (JSON)
 ```sh
 $this->db->where('kasd.document_asset_type REGEXP REPLACE ("' . $asset_id . '", ",", "(\,|$)|")', NULL, FALSE);
+```
+
+# Select from JSON data (JSON)
+```sh
+SELECT JSON_UNQUOTE(JSON_EXTRACT(csv_data, '$.firstName')) AS name FROM kyc_bulk_upload_record;
 ```
 
 # Generate Queries for adding auto-increment
@@ -75,4 +81,13 @@ $ COALESCE(
 ) AS document_name
 
 $ SELECT coalesce(NULLIF(email, ''), 'user@domain.com') FROM users WHERE id=1000000;
+```
+
+# Find and Replace
+```sh
+$ SELECT    
+    `red_status_feedback_text`,
+    replace(red_status_feedback_text, 'user_full_name', 'user_full_name_user_full_name')
+FROM 
+    kyc_companies;
 ```
