@@ -360,3 +360,28 @@ export class InputFormatDirective {
 -   HostListener: This is used for listening to the DOM event
 -   ElementRef: This is used for getting the DOM target element
 -   If directive is expecting only one parameter then you can directly pass your value to directive name "appInputFormat" and use it in the component
+
+## Forms
+
+### FormControl (ngModel)
+-   Each input field of the form will have form control object which will help us to know if form is dirty, valie, error etc
+-   This can be applied to induvidual the form control
+-   To create form control you should add ngModel directive to your input element and pass it to any template variable and then use template variable anywhere
+```sh
+<input ngModel name="firstName" #firstName="ngModel" />
+```
+
+### FormGroup (ngForm)
+-   This can be used for the form itself like FormControl for from flelds
+-   Using this you will have access to the all the form fields and thier status
+-   ngForm directive ia already added to the form bydefault. YOu have to pass it to any template variable and then use that anywhere
+-   ngSubmit is event fired when form is submitted
+```sh
+<form #f="ngForm" (ngSubmit)="submitContactForm(f)"></form>
+```
+
+### ngModelGroup directive
+-   This directive is used for grouping the form controls that is ngModels together
+```sh
+<div ngModelGroup="contact" #contact="ngModelGroup"></div>
+```
