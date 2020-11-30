@@ -389,5 +389,108 @@ export class InputFormatDirective {
 <div ngModelGroup="contact" #contact="ngModelGroup"></div>
 ```
 
+### Form Validation
+
+#### Template Driven
+```sh
+<div class="form-group">
+    <label for="firstName">First Name</label>
+    <input 
+        minlength="5" 
+        maxlength="10" 
+        required 
+        ngModel 
+        name="firstName" 
+        #firstName="ngModel" 
+        (blur)="log(firstName)" 
+        id="firstName" 
+        type="text" 
+        class="form-control" 
+        placeholder="First Name" />
+    <div 
+        class="alert alert-danger"
+        *ngIf="firstName.touched && firstName.invalid">
+        <p *ngIf="firstName.errors?.minlength">
+            First Name should be atleast {{ firstName.errors.minlength.requiredLength }} required.
+        </p>
+        <p *ngIf="firstName.errors?.required">
+            First Name is required.
+        </p>
+        <p *ngIf="firstName.errors?.maxlength">
+            First Name should not be more than {{ firstName.errors.maxlength.requiredLength }} required.
+        </p>
+    </div>
+</div>
+```
+
+#### Reactive (with Inbuilt & Custom validation rules)
+-  signup-form.component.ts
+```sh
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+signUpForm = new FormGroup({
+    username: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+        NoSpaceValidators.noSpace
+    ],
+        UniqueUsernameValidators.uniqueUsername
+    ),
+    password: new FormControl(null, [
+        Validators.required
+    ]),
+});
+```
+-   signup-form.component.html
+```sh
+<div class="form-group">
+    <label for="username">Username</label>
+    <input 
+        formControlName="username"
+        id="username" 
+        type="text" 
+        class="form-control">
+    <div *ngIf="username.pending">Checking for Uniqueness...</div>
+    <div *ngIf="username.touched && username.invalid" class="alert alert-danger">
+        <p *ngIf="username.errors.required">The username field is invalid</p>
+        <p *ngIf="username.errors.minlength">The username field length should be {{ username.errors.minlength.requiredLength }}</p>
+        <p *ngIf="username.errors.noSpace">The username field length should be contain space.</p>
+        <p *ngIf="username.errors.uniqueUsername">The username field should be unique.</p>
+    </div>
+    <p>{{ username.errors | json }}</p>
+    <p>{{ username.invalid }}</p>
+</div>
+```
+-   no-space.validators.ts
+```sh
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+export class NoSpaceValidators {
+    static noSpace(control: AbstractControl): ValidationErrors | null {
+        if (control.value) {
+            if (control.value?.indexOf(' ') != -1) {
+                return { noSpace: true }
+            }
+        }
+        return null;
+    }
+}
+```
+-   unique-username.validators.ts
+```sh
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+export class UniqueUsernameValidators {
+    static uniqueUsername(control: AbstractControl): Promise<ValidationErrors | null> {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                if (control.value && control.value == 'SKY') {
+                    resolve({ uniqueUsername: true });
+                } else {
+                    resolve(null);
+                }
+            }, 2000);
+        });
+    }
+}
+```
+
 ### Other
 -   [ngValue] can be used to store the complex object in selction.option
