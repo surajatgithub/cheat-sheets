@@ -50,6 +50,9 @@ What should we choose?
 - What is the backgroud? OOPS, POP, C or anyother?
 - What is your country, which framework is popular in your country?
 
+# Conventions
+-   Class name should follow Pascal Naming convention (ClassName | CourcesComponent)
+
 # Install Angular
 
 - Install node js
@@ -308,7 +311,7 @@ constructor(private route: ActivatedRoute) {
 
 ### ng-for
 
--   It has several lcal variables like index, first, last, odd, even, etc
+-   It has several local variables like index, first, last, odd, even, etc
 
 ### ngClass & ngStyle (similar)
 
@@ -385,3 +388,6 @@ export class InputFormatDirective {
 ```sh
 <div ngModelGroup="contact" #contact="ngModelGroup"></div>
 ```
+
+### Other
+-   [ngValue] can be used to store the complex object in selction.option
