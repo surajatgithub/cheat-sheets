@@ -53,6 +53,13 @@ $ tail -x <file_path>
 $ ls | wc -l
 ```
 
+### TAR|UNTAR tar file
+
+```sh
+TAR: tar cvf htdocs_new.tar htdocs/
+UNTAR: tar xvf htdocs_new.tar
+```
+
 1 – SYSTEM INFORMATION
 
 ### Display Linux system information
@@ -259,6 +266,10 @@ rm -rf directory
 ### Copy file1 to file2
 
 cp file1 file2
+
+### Copy directory to directory2 from docker
+
+docker cp 9f2f53c64ef0:/var/www/html/kyc ./
 
 ### Copy source_directory recursively to destination. If destination exists, copy source_directory into destination, otherwise create destination with the contents of source_directory.
 
@@ -585,3 +596,9 @@ sudo service mysqld start
 service mysqld status
 
 -   Check service status
+
+### Permissions
+
+sudo -l -U pradeep
+
+-   Check list of sudo commands you can fire

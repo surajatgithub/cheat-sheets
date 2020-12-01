@@ -4,6 +4,7 @@ $ mysql -u root -p < db_name < "<file_path>"
 $ mysql -u root -p < db_name < "<file_path>"
 $ mysql -u root -p prod_verify_live_1 < "<file_path>"
 $ mysql -u root -p verify_kyc_acme < "C:\Users\Codebox\Downloads\verify_kyc_acme.sql"
+$ mysql -u root -p verify_kyc_acme_dev < "C:\Users\Codebox\Downloads\verify_kyc_acme.sql"
 ```
 
 # Export
@@ -90,4 +91,34 @@ $ SELECT
     replace(red_status_feedback_text, 'user_full_name', 'user_full_name_user_full_name')
 FROM 
     kyc_companies;
+```
+
+# Few IMP import flags
+```sh
+SET INNODB_STRICT_MODE = 0;
+SET FOREIGN_KEY_CHECKS = 0;
+```
+
+# Search from SCHEMA
+```sh
+SELECT
+	SCHEMA_NAME,
+    TABLE_NAME,
+    COLUMN_NAME
+FROM
+    information_schema.schemata,
+    information_schema.columns
+WHERE
+	COLUMN_NAME LIKE '%template%'
+    AND SCHEMA_NAME IN(
+        'verify_kyc_demo'
+    )
+    AND TABLE_NAME NOT IN('pma__export_templates');
+```
+
+# Copy table from ONE DB to Another
+```sh
+CREATE TABLE verify_kyc_demo3.keys LIKE verify_kyc_demo2.keys;
+INSER INTO verify_kyc_demo3.kyc_countries SELECT * FROM verify_kyc_demo2.kyc_countries;
+mysqldump -u... -p... mydb t1 t2 t3 > mydb_tables.sql
 ```
