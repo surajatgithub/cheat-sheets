@@ -45,6 +45,7 @@ $ docker run busybox:1.24 ls /
 ### Login into container
 ```sh
 $ docker run -i -t busybox:1.24 ls /
+$ docker exec -it 9f2f53c64ef0 /bin/bash
 ```
 ```sh
 -   All the activities done after login, on exit/logout it will be vanished or cleared out
