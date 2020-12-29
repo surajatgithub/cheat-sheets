@@ -60,6 +60,7 @@ $ REGEXP_REPLACE(SUBSTRING(
     5
 ), '[^0-9]', '') as valid_score,
 
+$ SELECT REGEXP_REPLACE("ABCDEFG", "A|B", "*");
 ```
 
 # Set timezone

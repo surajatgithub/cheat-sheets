@@ -1,19 +1,33 @@
+# External resources
+-   https://sethrobertson.github.io/GitFixUm/fixup.html
+
+# Basic flow
+```sh
+$ git add <file> (or "git add .")
+$ git commit -m 'your message here'
+$ git push origin master
+```
+
 # Push
 ### Force(HARD) push active branch
 ```sh
 git push origin +HEAD
 ```
-```sh
-Push your commits to the remote
-```
+-   Push your commits to the remote
 
 # Merge
 ### Abort Merge
 ```sh
 git merge --abort
 ```
+-   Abort Last Merge
+
+# Remove files
+
+### Remove umtracked files
 ```sh
-Abort Last Merge
+$ git clean -n
+$ git clean -f
 ```
 
 # Remote URL
@@ -21,23 +35,31 @@ Abort Last Merge
 ```sh
 git remote rm origin
 ```
-```sh
-Remove remote URL from the Repository
-```
+-   Remove remote URL from the Repository
 
 ### Add Origin
 ```sh
 git remote add origin <git uri>
 ```
-```sh
-Add Remote URL to the Repository
-```
+-   Add Remote URL to the Repository
 
 # Credentials
 ### Store Credentials to locally (Username and Password)
 ```sh
 git config credential.helper store
 git push <git uri>
+```
+
+### Set Email and Name for repository (Global for all repositories)
+```sh
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+```
+
+### Set Email and Name for repository (For current repositories)
+```sh
+$ git config user.email "you@example.com"
+$ git config user.name "Your Name"
 ```
 
 # Checkout
@@ -80,3 +102,11 @@ $ git submodule update
 $ git checkout <active_branch_name>
 $ git submodule update
 ```
+
+# Removing the commites
+## Removing the last commit
+To remove the last commit from git, you can simply run `git reset --hard HEAD^` If you are removing multiple commits from the top, you can run `git reset --hard HEAD~2` to remove the last two commits. You can increase the number to remove even more commits.
+
+If you want to "`uncommit`" the commits, but keep the changes around for reworking, remove the "`--hard`": git reset HEAD^ which will evict the commits from the branch and from the index, but leave the working tree around.
+
+If you want to save the commits on a new branch name, then run git branch newbranchname before doing the git reset.
