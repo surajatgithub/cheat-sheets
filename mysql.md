@@ -142,3 +142,102 @@ mysqldump -u... -p... mydb t1 t2 t3 > mydb_tables.sql
 DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), interval `ks`.`user_dob` second), '%Y-%m-%d') as user_dob,
 TIMESTAMPDIFF(YEAR, DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), interval `ks`.`user_dob` second), '%Y-%m-%d'), CURDATE()) as user_age,
 ```
+
+# Writing user defined function
+```sh
+DROP FUNCTION IF EXISTS CUS_FROM_UNIXTIME;
+
+DELIMITER $$
+
+    CREATE FUNCTION CUS_FROM_UNIXTIME(INPUT BIGINT, OUTPUT_FORMAT VARCHAR(50))      
+    
+    RETURNS VARCHAR(50)         
+    DETERMINISTIC
+    
+    BEGIN
+        -- SET DEFAULT VALUE FOR OUTPUT AS NULL
+        DECLARE RESULT VARCHAR(50) DEFAULT NULL;
+        DECLARE TIMESTAMP_STRING VARCHAR(50) DEFAULT NULL;
+
+        -- CHECK IF INPUT IS NULL OR 0 THEN SET VALUE AS NULL
+        IF(INPUT IS NULL OR INPUT = 0)
+            THEN SET RESULT = NULL;
+        ELSE
+            -- CONVERT UNIX to TIMESTAMP
+            SET TIMESTAMP_STRING = DATE_ADD(FROM_UNIXTIME(0), interval INPUT second);
+
+            -- FAILED TO CONVERT TO TIMESTAMP BECAUSE INPUT WAS IN MILLISECONDS
+            IF(TIMESTAMP_STRING IS NULL)
+                THEN SET RESULT = DATE_ADD(FROM_UNIXTIME(0), interval INPUT/1000 second);
+            ELSE
+                SET RESULT = TIMESTAMP_STRING;
+            END IF;
+        END IF;
+        
+        SET RESULT = DATE_FORMAT(RESULT, OUTPUT_FORMAT);
+
+        RETURN RESULT;            
+    END $$
+
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS CUS_FROM_UNIXTIME;
+DELIMITER $$
+    CREATE FUNCTION CUS_FROM_UNIXTIME(INPUT BIGINT, OUTPUT_FORMAT VARCHAR(100))          
+    RETURNS VARCHAR(100)         
+    DETERMINISTIC    
+    BEGIN
+        -- SET DEFAULT VALUE FOR OUTPUT AS NULL
+        DECLARE RESULT VARCHAR(100) DEFAULT NULL;
+
+        -- CHECK IF INPUT IS NULL OR 0 THEN SET VALUE AS NULL
+        IF(INPUT > 0) THEN
+            SET RESULT = IF(LENGTH(INPUT) > 10, DATE_ADD(FROM_UNIXTIME(0), interval INPUT/1000 second), DATE_ADD(FROM_UNIXTIME(0), interval INPUT second));
+        ELSEIF(INPUT < 0) THEN
+            SET RESULT = IF(LENGTH(INPUT) > 11, DATE_ADD(FROM_UNIXTIME(0), interval INPUT/1000 second), DATE_ADD(FROM_UNIXTIME(0), interval INPUT second));
+        ELSE
+            SET RESULT = NULL;
+        END IF;
+
+        RETURN IF(RESULT IS NULL, RESULT, DATE_FORMAT(RESULT, OUTPUT_FORMAT));            
+    END $$
+DELIMITER ;
+
+SELECT CUS_FROM_UNIXTIME(1612471177, '%Y-%m-%d %H:%i:%s');
+SELECT CUS_FROM_UNIXTIME(347155200000, '%Y-%m-%d %H:%i:%s');
+SELECT CUS_FROM_UNIXTIME(1633824000000, '%Y-%m-%d %H:%i:%s');
+SELECT CUS_FROM_UNIXTIME(1574985600000, '%Y-%m-%d %H:%i:%s');
+SELECT CUS_FROM_UNIXTIME(-324259200000, '%Y-%m-%d %H:%i:%s');
+SELECT CUS_FROM_UNIXTIME(-3996518400, '%Y-%m-%d %H:%i:%s');
+```
+
+# Import database from Server one to another
+
+1. Step One—Perform a MySQL Dump
+Before transferring the database file to the new VPS, we first need to back it up on the original virtual server by using the mysqldump command.
+
+```sh
+$ mysqldump -u root -p --opt [database name] > [database name].sql
+```
+After the dump is performed, you are ready to transfer the database.
+
+2. Step Two—Copy the Database
+SCP helps you copy the database. If you used the previous command, you exported your database to your home folder.
+
+The SCP command has the following syntax:
+```sh
+$ scp [database name].sql [username]@[servername]:path/to/database/
+$ scp * ydesai@10.1.1.5:/data/publicweb_prod/other/prod_database_backup
+```
+A sample transfer might look like this:
+
+scp newdatabase.sql user@example.com:~/
+After you connect, the database will be transferred to the new virtual private server.
+
+3. Step Three—Import the Database
+Once the data has been transferred to the new server, you can import the database into MySQL:
+
+```sh
+$ mysql -u root -p newdatabase < /path/to/newdatabase.sql
+```
+With that, your transfer via SCP will be complete.

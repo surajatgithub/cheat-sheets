@@ -602,3 +602,26 @@ service mysqld status
 sudo -l -U pradeep
 
 -   Check list of sudo commands you can fire
+
+### Paths
+
+/opt/QA_ENV/apache/conf
+
+-   Apache conf file
+
+/etc/httpd/conf.d
+
+- SSL.conf
+
+### CMDS
+
+-	Restart apcache CentOS
+```sh
+sudo systemctl restart httpd.service
+```
+
+-	Restart apcache RHEL
+```sh
+/etc/init.d/apache2 restart
+```
+
