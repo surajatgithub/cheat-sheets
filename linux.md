@@ -611,17 +611,28 @@ sudo -l -U pradeep
 
 /etc/httpd/conf.d
 
-- SSL.conf
+-   SSL.conf
+
+/etc/httpd/modsecurity-crs/base_rules/modsecurity_crs_40_generic_attacks.conf
+
+-	Mode security configurations
 
 ### CMDS
 
--	Restart apcache CentOS
+-   Restart apcache CentOS
+
 ```sh
 sudo systemctl restart httpd.service
+systemctl status httpd.service
 ```
 
--	Restart apcache RHEL
+-   Restart apcache RHEL
+
 ```sh
 /etc/init.d/apache2 restart
 ```
 
+### Error logs
+
+-   logs/ssl_error_log
+-   logs/ssl_access_log

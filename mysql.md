@@ -56,7 +56,26 @@ WHERE
 # Get timezone of the mysql
 ```sh
 $ SELECT timediff(now(),convert_tz(now(),@@session.time_zone,'+00:00'));
+
 $ SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP);
+
+$ SELECT
+    TIMEDIFF(
+        NOW(), CONVERT_TZ(
+            NOW(), @@session.time_zone, '+00:00')
+        );
+
+$ SELECT
+    @@global.time_zone,
+    @@session.time_zone;
+
+
+$ SELECT
+    IF(
+        @@session.time_zone = 'SYSTEM',
+        @@system_time_zone,
+        @@session.time_zone
+    );
 ```
 
 # Convert -ve timestampot to date string
