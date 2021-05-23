@@ -68,3 +68,6 @@ $ docker inspect <container_id>
 ```sh
 $ 
 ```
+
+# Delete container with "created" status
+docker rm $(docker ps -q -f 'status=created')

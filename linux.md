@@ -602,3 +602,37 @@ service mysqld status
 sudo -l -U pradeep
 
 -   Check list of sudo commands you can fire
+
+### Paths
+
+/opt/QA_ENV/apache/conf
+
+-   Apache conf file
+
+/etc/httpd/conf.d
+
+-   SSL.conf
+
+/etc/httpd/modsecurity-crs/base_rules/modsecurity_crs_40_generic_attacks.conf
+
+-	Mode security configurations
+
+### CMDS
+
+-   Restart apcache CentOS
+
+```sh
+sudo systemctl restart httpd.service
+systemctl status httpd.service
+```
+
+-   Restart apcache RHEL
+
+```sh
+/etc/init.d/apache2 restart
+```
+
+### Error logs
+
+-   logs/ssl_error_log
+-   logs/ssl_access_log
