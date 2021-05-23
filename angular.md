@@ -366,9 +366,13 @@ export class InputFormatDirective {
 
 ## Forms
 
+### Config
+-   import "FormsModule" from @ngular/forms
+-   include it in "imports" in app.module.ts
+
 ### FormControl (ngModel)
--   Each input field of the form will have form control object which will help us to know if form is dirty, valie, error etc
--   This can be applied to induvidual the form control
+-   Each input field of the form will have form control object which will help us to know if form is dirty, valid, error etc
+-   This can be applied to individual the form control
 -   To create form control you should add ngModel directive to your input element and pass it to any template variable and then use template variable anywhere
 ```sh
 <input ngModel name="firstName" #firstName="ngModel" />
@@ -386,7 +390,13 @@ export class InputFormatDirective {
 ### ngModelGroup directive
 -   This directive is used for grouping the form controls that is ngModels together
 ```sh
-<div ngModelGroup="contact" #contact="ngModelGroup"></div>
+<div ngModelGroup="contact" #contact="ngModelGroup">
+    # NgModel
+    # NgModel
+    # NgModel
+    # NgModel
+    # NgModel
+</div>
 ```
 
 ### Form Validation
@@ -494,3 +504,41 @@ export class UniqueUsernameValidators {
 
 ### Other
 -   [ngValue] can be used to store the complex object in selction.option
+
+# Deployment
+
+-   `ng build --prod`, we can achieve below benifites just one command
+
+
+1.  Technique no. 1
+-   Just copy and paste the entire project
+
+## Minification
+-   Removing all the comments and white spacing.
+
+## Uglification
+-   Reaming the class and properties to shorter name.
+
+## Bundling
+-   Creating bundles of files
+-   Each bundle is combination of multiple javascript files
+
+## Dead code elimination
+-   Removing the unused code
+
+## AOT (Ahead of time compilation)
+-   Pre compiling angular components and modules
+
+## Environment
+-   Register your custom environment somewhere in root directory of your app
+-   ng serve --prod
+-   ng build --prod
+
+
+## Linting
+-   ng lint
+-   ng lint --fix
+
+## Actions 
+-   Research on the JIT and AOT compiler
+-   Learn about pipe(), map(), obsrvable, switchMap(), firebase best practices
