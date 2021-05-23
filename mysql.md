@@ -13,11 +13,17 @@ $ mysql -u root -p verify_kyc_acme_dev < "C:\Users\Codebox\Downloads\verify_kyc_
 
 $ mysqldump --add-drop-database --add-drop-table --triggers --routines --events --set-gtid-purged=off --ssl-ca=/var/lib/mysql/10.0.0.16ca.pem --ssl-cert=/var/lib/mysql/10.0.0.16-client-cert.pem --ssl-key=/var/lib/mysql/10.0.0.16-client-key.pem --user=$MYSQL_USER -p$MYSQL_PASSWORD $kyc_db context_a_document_details kyc_ai_credit_report_liabilities kyc_ai_has_assets kyc_ai_has_liabilities kyc_ai_details kyc_ai_document_types kyc_ai_meta_assets kyc_ai_meta_liabilitites kyc_ai_screenshots kyc_ai_supported_documents kyc_submissions kyc_logs kyc_webhook_hit_logs kyc_activity_logs > "$aci_db.sql"
 
-$ mysql --user=chad --password=password -e "DROP DATABASE IF EXISTS verify_aci_westernunion; CREATE DATABASE verify_aci_westernunion;"
+$ mysql --user=user --password=password -e "DROP DATABASE IF EXISTS verify_aci_westernunion; CREATE DATABASE verify_aci_westernunion;"
 
-$ mysql --user=chad --password=password --ssl-ca=/var/lib/mysql/10.0.0.16ca.pem --ssl-cert=/var/lib/mysql/10.0.0.16-client-cert.pem --ssl-key=/var/lib/mysql/10.0.0.16-client-key.pem verify_aci_westernunion < "verify_aci_westernunion.sql"
+$ mysql --user=user --password=password --ssl-ca=/var/lib/mysql/10.0.0.16ca.pem --ssl-cert=/var/lib/mysql/10.0.0.16-client-cert.pem --ssl-key=/var/lib/mysql/10.0.0.16-client-key.pem verify_aci_westernunion < "verify_aci_westernunion.sql"
 
-$ mysql --user=chad --password=password --ssl-ca=/var/lib/mysql/10.0.0.16ca.pem --ssl-cert=/var/lib/mysql/10.0.0.16-client-cert.pem --ssl-key=/var/lib/mysql/10.0.0.16-client-key.pem verify_aci_westernunion < "3.1.sql_script_1.sql"
+$ mysql --user=user --password=password --ssl-ca=/var/lib/mysql/10.0.0.16ca.pem --ssl-cert=/var/lib/mysql/10.0.0.16-client-cert.pem --ssl-key=/var/lib/mysql/10.0.0.16-client-key.pem verify_aci_westernunion < "3.1.sql_script_1.sql"
+
+## Export databases with DROP DATABASE, CREATE DATABASE command
+$ mysqldump --add-drop-database --add-drop-table --triggers --routines --events --set-gtid-purged=off --user=user --password=password --databases DATABASE_1 DATABASE_2 DATABASE_3 > "databases.sql"
+
+## Import the above exported databases
+$ mysqldump --user=user --password=password < "kyc_dbs.sql"
 ```
 
 # Export
