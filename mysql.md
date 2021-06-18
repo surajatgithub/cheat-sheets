@@ -266,3 +266,9 @@ Once the data has been transferred to the new server, you can import the databas
 $ mysql -u root -p newdatabase < /path/to/newdatabase.sql
 ```
 With that, your transfer via SCP will be complete.
+
+# Replace `ONLY_FULL_GROUP_BY`
+
+```sh
+$ SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+```
